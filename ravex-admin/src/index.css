@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-tiffany: #0ABAB5;
+  --color-tiffany-light: #5CE1E6;
+  --color-background: #000000;
+  --color-card: #0a0a0a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-foreground: #ffffff;
+
+  --font-brand: "Orbitron", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-background text-foreground font-body selection:bg-tiffany/30;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-tiffany/50 transition-colors;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/5 rounded-full hover:bg-tiffany/40;
+  }
+}
+
+/* Utility Components */
+@layer components {
+  .btn-primary {
+    @apply bg-tiffany text-white font-black tracking-widest rounded-xl px-8 py-4 
+           hover:scale-[1.02] hover:shadow-lg hover:shadow-tiffany/20 active:scale-[0.98] transition-all;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-foreground font-black tracking-widest rounded-xl px-8 py-4 
+           border border-border hover:border-tiffany hover:text-tiffany transition-all;
+  }
+
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border;
+  }
+
+  .input-field {
+    @apply w-full bg-background border border-border rounded-xl py-4 px-6 text-sm outline-none 
+           focus:border-tiffany focus:ring-4 focus:ring-tiffany/5 transition-all font-medium;
+  }
+}
+
+/* Glass Card Animation */
+.glass-glow {
+  position: relative;
+}
+.glass-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(10, 186, 181, 0.2), transparent 40%, transparent 60%, rgba(10, 186, 181, 0.1));
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.glass-glow:hover::after {
+  opacity: 1;
+}
+
+/* Custom Animated Checkbox */
+.cbx-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cbx-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.cbx-check {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.cbx-check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.cbx-check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.cbx-check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+
+.cbx-container:hover .cbx-check svg {
+  stroke: #0ABAB5;
+}
+
+.cbx-container input:checked ~ .cbx-check svg {
+  stroke: #0ABAB5;
+}
+
+.cbx-container input:checked ~ .cbx-check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+
+.cbx-container input:checked ~ .cbx-check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
